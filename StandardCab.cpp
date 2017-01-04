@@ -9,7 +9,7 @@
 
 StandardCab::StandardCab()
 {
-
+	this->SetSpeed(1);
 }
 
 StandardCab::~StandardCab() 

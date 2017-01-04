@@ -5,28 +5,59 @@
 * Id (Efraim) : 207304262
 */
 
+#include <iostream>
+#include "Point.h"
 #include "Driver.h"
 #include "Client.h"
+#include "SocketClient.h"
+#include "functions.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+    if (argc != 3)
+    {
+        cout << "invalid input!" << endl;
+        return -1;
+    }
+    SocketClient sc = SocketClient(string(argv[1]), stoi(argv[2]));
     Driver* d = CreatDriver();
     bool quit = false;
-    Send(f->GetID());
-    Cab* c = Recive();
-    Send("Trip");
+    Send(itos(f->GetID());
+    Cab* c = new Cab(Recive());
+    Send(string("Trip"));
     while (!quit)
     {
-        Trip* t = Recive();
-        bool tripFinished;
-        while (!tripFinished)
+        string str = Recive();
+        try
         {
-            Send("Advance");
-            tripFinished = Recive();
+            Trip* t = new Trip(str);
+            bool tripFinished = false;
+            while (!tripFinished)
+            {
+                Send(string("Advance"));
+                Point move = Recive();
+                
+            }
+            Send(string("Quit"));
+            quit = Recive();
         }
-        Send("Quit");
-        quit = Recive();
+        catch (...)
+        {
+            try 
+            {
+                if (str == "Location")
+                {
+                    Send(d.GetLocation().toString())
+                }
+            }
+            catch (...)
+            {
+                
+            }
+        }
+        
     }
+    delete c;
     return 0;
 }
 

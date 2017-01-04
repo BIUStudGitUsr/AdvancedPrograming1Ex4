@@ -13,6 +13,7 @@
 #include <string>
 #include "Cab.h"
 #include "Trip.h"
+#include "functions.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ class Driver
 
 public:
 	
-	typedef enum MartialStatus {SINGLE,MARRIED,DIVORCED,WIDOWED} MartialStatus;
+	typedef enum MartialStatus {SINGLE=0,MARRIED=1,DIVORCED=2,WIDOWED=3} MartialStatus;
 
 private:
 	
@@ -36,6 +37,8 @@ private:
 	MartialStatus m_status;
 	
 	Point m_location;
+	
+	Point dest;
 
 	Cab* m_cab;
 
@@ -47,15 +50,19 @@ public:
 
 	unsigned int GetID() const { return m_id; }
 
+	Cab * GetCab() const {return m_cab;}
+
 	double GetSatisfacation() const { return m_satisfaction; }
 
 	MartialStatus GetStatus() const { return m_status; }
 
 	Point GetLocation() const { return m_location; }
 	
+	Point GetDestination() const {return dest;}
+
 	void PrintLocation() const {cout<< GetLocation();}
 	
-	void SetID(unsigned int ui)  { m_id = ui; }
+	void SetID(unsigned int str)  { m_id = str; }
 
 	void SetAge(unsigned int ui) { m_age = ui; }
 
@@ -67,8 +74,14 @@ public:
 
 	void SetStatus(MartialStatus ms) { m_status = ms; }
 
-	void SetLocation(Point p) { m_location.x = p.x; m_location.y = p.y; }
+	void SetLocation(Point p) { m_location = p; }
 	
+	void SetDestination(Point p) {dest = p;}
+
+	string toString ();
+
+	Driver(std::string dString);
+
 	Driver();
  
 	Driver(const Point& p);

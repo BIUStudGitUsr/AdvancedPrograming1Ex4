@@ -9,6 +9,9 @@
 #define _H_GURD_TRIP
 #include "Driver.h"
 #include "Point.h"
+#include <string>
+#include <iostream>
+using namespace std;
 /**********************************************
 
 * Class Name: Trip
@@ -58,6 +61,10 @@ public:
 	void SetPassangers(unsigned int ui) { m_passengers = ui; }
 
 	void SetPrice(double ui) { m_price = ui; }
+
+	string toString();
+
+	Trip(string tString);
 
 	Trip();
 

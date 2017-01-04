@@ -42,7 +42,41 @@ bool operator==(const list<Obj>& lis1, const list<Obj>& lis2)
 }
 
 
+bool ifContaining(string str1,string str2) ;
 
+char* itos(int i, char* b)
+{
+    char const digit[] = "0123456789";
+    char* p = b;
+    if(i<0)
+    {
+        *p++ = '-';
+        i *= -1;
+    }
+    int shifter = i;
+    do
+    { //Move to where representation ends
+        p++;
+        shifter = shifter/10;
+    } while(shifter);
+    *p = '\0';
+    do
+    { //Move back, inserting digits as u go
+        *(p--) = digit[i % 10];
+        i = i/10;
+    } while(i);
+    return b;
+}
 
-
+#define in *
+template<class Obj>
+bool operator* (Obj o,list<Obj> lis)
+{
+	for(typename list<Obj>::iterator it=lis.begin(); it!=lis.end();++it)
+	{
+		if(o == *it)
+			return true;
+	}
+	return false;
+}
 #endif /* _H_GURD_FUNCTIONS */

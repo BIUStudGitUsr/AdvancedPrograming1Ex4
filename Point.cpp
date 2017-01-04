@@ -6,24 +6,50 @@
 */
 
 #include "Point.h"
+bool ifContaining(string str1,string str2);
 
-/**********************************************
+/******************************************
 
-* Operator Type: +
+* function goal: keep the point as string to pass 
+	by socket later
 
-* Operator Arguments: Two points
+* Operator Arguments: none
 
-* Operator Output: The sum of the points
+* Operator Output: The string that descrribes this point
 
-* Operator Aim: Sum points
+* Operator Aim: keep the point as string to pass 
+	bye socket later
 
 ***********************************************/
-const Point& operator+(const Point& p, const Point& q)
+std::string Point::toString()
 {
-	return Point(p.x + q.x, p.y + q.y);
+		std::string output = "Point:\n";
+		output += "x:";
+		output += std::to_string(x);
+		output += "y:";
+		output += std::to_string(y);
 }
-
-
+/********************
+	constructor that receives a string created with 
+	toString of another Point.
+**********************/
+Point::Point(std::string str)
+{
+	if(!ifContaining("Point:\n",str))
+	{
+        throw string("N");
+	}
+	if(ifContaining("x:",str))
+	{
+		x=stoi(str);
+		ifContaining(to_string(x),str);
+	}
+	if(ifContaining("y:",str))
+	{
+		y=stoi(str);
+		ifContaining(to_string(y),str);
+	}
+}
 
 /**********************************************
 
@@ -41,11 +67,6 @@ std::ostream& operator<<(std::ostream& os, const Point& p)
 {
 	return os << "(" << p.x << "," << p.y << ")";
 }
-
-
-
-
-
 
 /**********************************************
 

@@ -8,9 +8,9 @@
 #include "TaxiCenter.h"
 
 
-list<Driver*> TaxiCenter::m_drivers(1, NULL);
-list<Trip*> TaxiCenter::m_trips(1, NULL);
-list<Cab*> TaxiCenter::m_cabs(1, NULL);	
+list<Driver*> TaxiCenter::m_drivers(1, new Driver());
+list<Trip*> TaxiCenter::m_trips(1, new Trip());
+list<Cab*> TaxiCenter::m_cabs(1, new Cab());	
 
 void* TaxiCenter::AnswerCall()
 {
@@ -19,8 +19,8 @@ void* TaxiCenter::AnswerCall()
 
 const Driver* TaxiCenter::GetDriver(unsigned int id)
 {
-    list<Driver*>::iterator it = GetDrivers().begin();
-    for (it++; it != GetDrivers().end(); it++)
+    for (list<Driver*>::iterator it = GetDrivers().begin(); \
+        it != GetDrivers().end(); it++)
     {
         if ((*it)->GetID() == id)
         {
