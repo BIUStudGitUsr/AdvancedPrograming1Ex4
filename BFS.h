@@ -12,6 +12,7 @@
 #include <list>
 #include <vector>
 #include "Point.h"
+#include "functions.h"
 using namespace std;
 
 /**********************************************
@@ -31,7 +32,7 @@ private:
 
 	BFS() {}
 	vector<vector<Dir>* >* m_board;
-
+	list<Point> obsticles;
 public:
 
 	BFS(const Point& start, const Point& dest, int xsize, int ysize, list<Point>* ret);

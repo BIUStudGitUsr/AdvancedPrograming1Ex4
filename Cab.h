@@ -7,7 +7,10 @@
 
 #ifndef _H_GURD_CAB
 #define _H_GURD_CAB
-
+#include <string>
+#include <iostream>
+#include "functions.h"
+using namespace std;
 class Cab 
 {
 
@@ -23,6 +26,8 @@ private:
 	
 	unsigned int m_id;
 	
+	unsigned int speed;	
+
 	Manufactor m_manufactor;
 	
 	Color m_color;
@@ -33,17 +38,25 @@ public:
 	
 	unsigned int GetID() const { return m_id; }
 	
+	unsigned int GetSpeed() const {return speed;}
+
 	Manufactor GetManufactor() const { return m_manufactor; }
 
 	Color GetColor() const { return m_color; }
 
 	void SetKMP(unsigned int ui) { m_kmp = ui; }
-
+	
 	void SetID(unsigned int str) { m_id = str; }
+
+	void SetSpeed(unsigned int s) {speed = s;}	
 
 	void SetManufactor(Manufactor m) { m_manufactor = m; }
 
 	void SetColor(Color c) { m_color = c; }
+	
+	std::string toString();
+
+	Cab(std::string cString);
 
 	Cab();
 	

@@ -1,7 +1,7 @@
 #include "MainFlow.h"
 
 
-#define INSERT_DRIVER 1
+#define RECEIVE_DRIVER 1
 #define INSERT_RIDE 2
 #define INSERT_VEHICLE 3
 #define REQUEST_DRIVER_LOCATION 4
@@ -11,6 +11,34 @@
 #define STANDARD_CAB 1
 #define LUXURY_CAB 2
 
+template<class Obj>
+list<Obj>& operator<<(list<Obj>& lis, const Obj& o)
+{
+    lis.push_back(o);
+    return lis;
+}
+
+template<class Obj>
+list<Obj>& operator>>(list<Obj>& lis, Obj& o)
+{
+    o = lis.back();
+    lis.pop_back(o);
+    return lis;
+}
+
+
+template<class Obj>
+bool operator==(const list<Obj>& lis1, const list<Obj>& lis2)
+{
+    typename list<Obj>::iterator it = lis1.begin();
+    typename list<Obj>::iterator jt = lis2.begin();
+    for(; it != lis1.end() && jt != lis2.end(); it++, jt++)
+    {
+        if (*it != *jt)
+            return false;
+    }
+    return (it == lis1.end() && jt == lis2.end());
+}
 
 /**********************************************
 
@@ -44,7 +72,7 @@ using namespace std;
 *    Function Output: MainFlow
 
 *    Function Operation: runs all the system of inputs 
-        according to the specified int the exercise
+        according to the specified in the exercise
 
 ************************************************************/
 MainFlow::MainFlow()
@@ -71,10 +99,11 @@ MainFlow::MainFlow()
 	do
 	{
 		cin >> input;
+        	clock();
 		switch(input)
 		{
-			case INSERT_DRIVER: 
-			    InsertDriver();
+			case RECEIVE_DRIVER: 
+			    //ReceiveDriver();
 				break;
 			case INSERT_RIDE: 
 			    InsertRide();
@@ -88,7 +117,7 @@ MainFlow::MainFlow()
 			case STARTDRIVING: 
 			    StartDriving();
 				break;
-			case EXIT: 
+			case EXIT:
 			    toContinue = false; 
 			    DeleteAllData();
 				break;
@@ -96,6 +125,37 @@ MainFlow::MainFlow()
 	} while(toContinue);
 }
 
+void clock(int *MapDs)
+{
+    static int time = 0;
+    time++;
+
+    list<Driver*>::iterator itDriver = TaxiCenter::GetDrivers().begin();
+    itDriver++;
+
+    list<Trip*>::iterator itTrip = TaxiCenter::GetTrips().begin();
+    itTrip++;
+
+    list<Point>* ret;
+
+    for (;itTrip != TaxiCenter::GetTrips().end(); itTrip++)
+    {
+        for (; itDriver != TaxiCenter::GetDrivers().end(); itDriver++)
+        {
+            if ((*itDriver)->GetDestination() == (*itTrip)->GetEnd())
+            {
+                BFS((*itDriver)->GetLocation(),(*itDriver)->GetDestination(),MapDs[0],MapDs[1],ret);
+                list<Point>::iterator itBFS = ret->begin();
+                itBFS++; //first is to ignore the begin item
+                for(int i=0;i<(*itDriver)->GetCab()->GetSpeed() ; i++)
+			itBFS++; //moving forward in the BFS root
+
+                (*itDriver)->SetLocation((*itBFS));
+            }
+        }
+    }
+    DELETE_LIST(Trip, TaxiCenter::GetTrips())
+}
 
 /**************************************************************
 
@@ -109,29 +169,26 @@ MainFlow::MainFlow()
                          to thier destenations
 
 ****************************************************************/
+
 void MainFlow::StartDriving()
 {
-    list<Driver*>::iterator itDriver = TaxiCenter::GetDrivers().begin();
-    itDriver++;
-    
-    
-    
-    list<Trip*>::iterator itTrip = TaxiCenter::GetTrips().begin();
-    itTrip++;
+	list<Driver*>::iterator itDriver = TaxiCenter::GetDrivers().end();
+	itDriver--; //runs from the start to the end to make it LIFO
 
-    for (;itTrip != TaxiCenter::GetTrips().end(); itTrip++)
-    {
-        for (; itDriver != TaxiCenter::GetDrivers().end(); itDriver++)
-        {
-            if ((*itDriver)->GetLocation() == (*itTrip)->GetStart())
-            {
-                (*itDriver)->SetLocation((*itTrip)->GetEnd());
-            }
-        }
-        itDriver = TaxiCenter::GetDrivers().begin();
-        itDriver++;
-    }
-    DELETE_LIST(Trip, TaxiCenter::GetTrips())
+	list<Trip*>::iterator itTrip = TaxiCenter::GetTrips().begin();
+	itTrip++;
+
+	for (;itTrip != TaxiCenter::GetTrips().end(); itTrip++)
+	{
+		for (; itDriver != TaxiCenter::GetDrivers().end(); itDriver--)
+		{
+			if ((*itDriver)->GetLocation() == (*itTrip)->GetStart())
+			{
+				(*itDriver)->SetDestination((*itTrip)->GetEnd());
+			}
+		}
+	}
+	DELETE_LIST(Trip, TaxiCenter::GetTrips())
 }
 
 

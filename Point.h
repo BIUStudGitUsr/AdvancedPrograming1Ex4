@@ -9,8 +9,8 @@
 #define _H_GURD_POINT
 
 #include <iostream>
-
-
+#include <string>
+using namespace std;
 
 /**********************************************
 
@@ -35,8 +35,13 @@ public:
 	Point(int x, int y) : x(x), y(y) {}
 
 	Point(const Point& p) : x(p.x), y(p.y) {}
-
+	
+	Point(std::string str);
+	
 	~Point() {}
+	
+	std::string toString();
+	
 };
 
 const Point& operator+(const Point& p, const Point& q);

@@ -4,6 +4,7 @@
 #include "Driver.h"
 #include "StandardCab.h"
 #include "LuxuryCab.h"
+#include "BFS.h"
 #include <iostream>
 #include "Driver.h"
 #include <list>

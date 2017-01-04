@@ -52,6 +52,8 @@ curDir = (Dir)(curDir + 1);
 ***********************************************/
 bool BFS::IsOk(const Point& p)
 {
+	if(p in obsticles)
+		return false;	
 	return p.x >= 0 && p.y >= 0 && p.x < m_board->size() && p.y < ((*m_board)[0])->size();
 }
 

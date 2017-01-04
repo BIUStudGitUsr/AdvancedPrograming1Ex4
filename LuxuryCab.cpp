@@ -7,9 +7,9 @@
 
 #include "LuxuryCab.h"
 
-LuxuryCab::LuxuryCab() 
+LuxuryCab::LuxuryCab()
 {
-
+	this->SetSpeed(2);
 }
 
 LuxuryCab::~LuxuryCab()
